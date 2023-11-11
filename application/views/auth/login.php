@@ -12,7 +12,7 @@
                             <div class="col-lg">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 mb-4 mt-4" style="color: #524FE1;"><b>SPADA</b>assesment</h1>
+                                        <h1 class="h4 mb-4 mt-4" style="color: #2D2C73;"><b>SPADA</b>assesment</h1>
                                     </div>
 
                                     <?= $this->session->flashdata('message'); ?>
@@ -26,13 +26,10 @@
                                             <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Enter Password">
                                             <?= form_error('password', '<small class="text-danger pl-3">', '</small>'); ?>
                                         </div>
-                                        <button type="submit" class="btn btn-primary btn-user btn-block text-light" style="font-size:15px;">
+                                        <button type="submit" class="btn btn-user btn-block text-light" style="font-size:15px; background-color: #2D2C73">
                                             <b>Login</b>
                                         </button>
                                         <hr>
-                                        <div class="text-center">
-                                            <a class="small" href="forgot-password.html">Forgot Password?</a>
-                                        </div>
                                         <div class="text-center">
                                             <a class="small" href="<?= base_url(); ?>auth/registration">Create an Account!</a>
                                         </div>
