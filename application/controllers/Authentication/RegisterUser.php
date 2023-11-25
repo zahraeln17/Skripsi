@@ -7,6 +7,7 @@ class RegisterUser extends CI_Controller
     {
         parent::__construct();
         $this->load->library('form_validation');
+        $this->load->library('session');
     }
 
     public function RegisterStudent(){
@@ -25,6 +26,7 @@ class RegisterUser extends CI_Controller
         ];
         $student = $this->_createData('students', $studentData);
         $this->session->set_flashdata('regiterMsg', 'Register Student Success');
+        $this->session->set_userdata($studentData);
     }
 
     public function RegisterLecture(){
@@ -42,6 +44,7 @@ class RegisterUser extends CI_Controller
         ];
         $lecture = $this->_createData('students', $lectureData);
         $this->session->set_flashdata('regiterMsg', 'Register Lecture Success');
+        $this->session->set_userdata($lectureData);
     }
 
     private function _createData($table, $data){
