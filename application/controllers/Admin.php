@@ -16,6 +16,8 @@ class Admin extends CI_Controller{
     }
 
     private function dashboardHandler(){
+        $data['title'] = 'Dashboard';
+
         $sql = "
             SELECT
                 COUNT(CASE WHEN u.is_admin = 0 THEN 1 END) AS count_user,
@@ -36,11 +38,18 @@ class Admin extends CI_Controller{
         $result = $query->result_array();
 
         foreach ($result as $row) {
-            echo 'user = '. $row['count_user'] . '<br>';
-            echo 'laki = '. $row['count_male'] . '<br>';
-            echo 'cewe = '.$row['count_female'] . '<br>';
-            echo 'ilkom = '.$row['program_studi_ilkom'] . '<br>';
-            echo 'pilkom = '.$row['program_studi_pilkom'] . '<br>';
+            $data['user'] =  $row['count_user'];
+            $data['laki'] =  $row['count_male'];
+            $data['cewe'] = $row['count_female'];
+            $data['ilkom'] = $row['program_studi_ilkom'];
+            $data['pilkom'] = $row['program_studi_pilkom'];
         }
+
+
+        $this->load->view('templates/admin-header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('admin/index', $data);
+        $this->load->view('templates/footer');
     }
 }

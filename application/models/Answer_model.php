@@ -37,6 +37,12 @@ class Answer_model extends CI_Model{
         }
     }
 
+    public function updateRecordById($id, $data, $tableName) {
+        $this->db->where('id', $id);
+        $this->db->update($tableName, $data);
+        return $this->db->affected_rows(); // Return the number of affected rows
+    }
+    
     public function CreateAnswerDetails($answer){
         $this->db->insert('answer_details', $answer);
     }

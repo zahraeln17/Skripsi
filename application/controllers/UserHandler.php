@@ -16,8 +16,13 @@ class UserHandler extends CI_Controller{
                 $this->handleDosenRegisterRequest();
             }else if ($user_type == 'mhs'){
                 $this->handleMhsRegisterRequest();
+                $userId = $this->session->userdata('user_id');
+
             }
-            redirect('votes', 'refresh');
+            if(ISSET($userId)){
+                redirect('votes', 'refresh');
+            }else
+            {  redirect('register-user', 'refresh');}
         }else{
             // Handle post request
             $this->handleVoteWithGetRequest();
@@ -50,12 +55,27 @@ class UserHandler extends CI_Controller{
         $lecture = $this->_createData('lectures', $lectureData);
         if ($lecture == false){
             die('error');
+        }  
+
+        $answerData = [
+            'user_id' => $user
+        ];
+        $answer = $this->_createData('answers', $answerData);
+        if ($answer == false){
+            die('error');
         }
+
+
         $this->session->set_flashdata('regiterMsg', 'Register Lecture Success');
         $this->session->set_userdata($lectureData);
     }
 
     private function handleMhsRegisterRequest(){
+        $this->form_validation->set_rules('program-studi', 'ProgramStudi', 'required', array('required' => 'Please select a program studi.'));
+
+        if ($this->form_validation->run() == FALSE) {
+            redirect('register-user', 'refresh');
+        }
         $userData = [
             'name' => htmlspecialchars($this->input->post('student-name', true)),
             'gender_id' => $this->input->post('jenis-kelamin'),
@@ -75,6 +95,15 @@ class UserHandler extends CI_Controller{
         if ($student == false){
             die('error');
         }
+
+        $answerData = [
+            'user_id' => $user
+        ];
+        $answer = $this->_createData('answers', $answerData);
+        if ($answer == false){
+            die('error');
+        }
+
         $this->session->set_flashdata('regiterMsg', 'Register Student Success');
         $this->session->set_userdata($studentData);
     }
