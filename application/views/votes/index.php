@@ -19,7 +19,7 @@
                                 </div>
 
                                 <form class="user" method="post" action="<?= base_url('votes'); ?>">
-                                    <div class="form-group" id="user-t">
+                                    <div class="form-group" id="user-type">
                                         <input type="radio" name="user-type" id="user-type-dosen" value="dosen" class="pl-7" onclick="showLecturerForm()">
                                         <label for="user-type-dosen"><h3 class="h5 mb-4 mt-4" style="color: #2D2C73;"><b>Dosen</b></h3></label>
                                         
@@ -53,9 +53,9 @@
                                         </div>
                                         Jenis Kelamin
                                         <div class="form-group">
-                                        <input type="radio" name="jenis-kelamin" id="jenis-kelamin-laki" value="laki-laki">
+                                        <input type="radio" name="jenis-kelamin" id="jenis-kelamin-laki" value="1">
                                             <label for="jenis-kelamin-laki">laki-laki</label>
-                                            <input type="radio" name="jenis-kelamin" id="jenis-kelamin-perempuan" value="perempuan">
+                                            <input type="radio" name="jenis-kelamin" id="jenis-kelamin-perempuan" value="2">
                                             <label for="jenis-kelamin-perempuan">perempuan</label>
                                         </div>
                                     </div>
@@ -70,7 +70,7 @@
                                             <input type="radio" name="program-studi" id="program-studi-pilkom" value="pilkom">
                                             <label for="program-studi-pilkom">Pendidikan Ilmu Komputer</label>
                                         </div>
-                                        Angkatan
+                                        Lama Mengajar
                                         <div class="form-group">
                                             <input type="radio" name="time-teaching" id="time-teaching-2" value="2">
                                             <label for="time-teaching-2">0-2 tahun</label>
@@ -81,9 +81,9 @@
                                         </div>
                                         Jenis Kelamin
                                         <div class="form-group">
-                                        <input type="radio" name="jenis-kelamin" id="jenis-kelamin-laki" value="laki-laki">
+                                        <input type="radio" name="jenis-kelamin" id="jenis-kelamin-laki" value="1">
                                             <label for="jenis-kelamin-laki">laki-laki</label>
-                                            <input type="radio" name="jenis-kelamin" id="jenis-kelamin-perempuan" value="perempuan">
+                                            <input type="radio" name="jenis-kelamin" id="jenis-kelamin-perempuan" value="2">
                                             <label for="jenis-kelamin-perempuan">perempuan</label>
                                         </div>
                                     </div>
@@ -110,11 +110,14 @@
         var studentModal = document.getElementById('student-form');
         var introTag = document.getElementById('intro');
         var submitButton = document.getElementById('submitButton');
+        var userTypeDiv = document.getElementById('user-type');
+        
 
         if (lecturerModal !== null) {
             lecturerModal.style.display = 'block';
             introTag.style.display = 'none';
             submitButton.style.display = 'block';
+            userTypeDiv.style.display = 'none';
         }
 
         if (studentModal !== null) {
@@ -126,6 +129,7 @@
         var studentModal = document.getElementById('student-form');
         var introTag = document.getElementById('intro');
         var submitButton = document.getElementById('submitButton');
+        var userTypeDiv = document.getElementById('user-type');
 
         if (lecturerModal !== null) {
             lecturerModal.style.display = 'none';  
@@ -135,6 +139,7 @@
             studentModal.style.display = 'block';
             introTag.style.display = 'none';
             submitButton.style.display = 'block';
+            userTypeDiv.style.display = 'none';
         }
     }
 </script>
