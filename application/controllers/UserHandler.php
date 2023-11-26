@@ -38,13 +38,19 @@ class UserHandler extends CI_Controller{
             'is_admin' => 0,
         ];
         $user = $this->_createData('users', $userData);
+        if ($user == false){
+            die('error');
+        }
 
         $lectureData = [
             'user_id' => $user,
-            'prodi' => $this->input->post('porgram-studi'),
+            'prodi' => $this->input->post('program-studi'),
             'time_teaching' => $this->input->post('time-teaching'),
         ];
         $lecture = $this->_createData('lectures', $lectureData);
+        if ($lecture == false){
+            die('error');
+        }
         $this->session->set_flashdata('regiterMsg', 'Register Lecture Success');
         $this->session->set_userdata($lectureData);
     }
@@ -56,7 +62,9 @@ class UserHandler extends CI_Controller{
             'is_admin' => 0,
         ];
         $user = $this->_createData('users', $userData);
-
+        if ($user == false){
+            die('error');
+        }
         $studentData = [
             'user_id' => $user,
             'nim' => $this->input->post('student-nim'),
@@ -64,12 +72,22 @@ class UserHandler extends CI_Controller{
             'class' => $this->input->post('angkatan'),
         ];
         $student = $this->_createData('students', $studentData);
+        if ($student == false){
+            die('error');
+        }
         $this->session->set_flashdata('regiterMsg', 'Register Student Success');
         $this->session->set_userdata($studentData);
     }
 
     private function _createData($table, $data){
-        $query = $this->db->insert($table, $data);
-        return $this->db->insert_id();
+        $this->db->insert($table, $data);
+
+        if ($this->db->affected_rows() > 0) {
+            return $this->db->insert_id();
+        } else {
+            // Handle the error, you might log it or throw an exception
+            log_message('error', 'Error inserting data into ' . $table);
+            return false;
+        }
     }
 }

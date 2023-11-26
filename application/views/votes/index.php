@@ -18,7 +18,7 @@
                                     <h1 class="h4 mb-4 mt-4" style="color: red;"><b>HALLO!</b>  I'm....</h1>
                                 </div>
 
-                                <form class="user" method="post" action="<?= base_url('votes'); ?>">
+                                <form class="user" method="post" action="<?= base_url('register-user'); ?>">
                                     <div class="form-group" id="user-type">
                                         <input type="radio" name="user-type" id="user-type-dosen" value="dosen" class="pl-7" onclick="showLecturerForm()">
                                         <label for="user-type-dosen"><h3 class="h5 mb-4 mt-4" style="color: #2D2C73;"><b>Dosen</b></h3></label>

@@ -24,7 +24,7 @@ class Question_model extends CI_Model{
     }
 
     private function _getQuestion(){
-        $this->db->select('questioners.questioner_text, topics.title');
+        $this->db->select('questioners.questioner_text, questioners.id, topics.title');
         $this->db->from('questioners');
         $this->db->join('topics', 'questioners.topic_id = topics.id');
         $query = $this->db->get();

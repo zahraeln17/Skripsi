@@ -56,3 +56,4 @@ $route['translate_uri_dashes'] = FALSE;
 // User Routes
 $route['register-user'] = 'userhandler';
 $route['votes'] = 'votes';
+$route['admin/dashboard'] = 'admin/dashboard';
