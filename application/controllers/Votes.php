@@ -20,23 +20,24 @@ class Votes extends CI_Controller{
     }
 
     public function storeQuestionAnswer(){
+        
         if ($this->input->method() == 'post'){
             $this->handleStoreAnswer();
         }
     }
 
     private function handleStoreAnswer(){
-        $userId = $this->session->userdata('user_id');
-        $answers = $this->input->post('answers');
-        $answersData = array();
-        foreach ($answers as $answer){
-            $answersData[] = array(
-                'questioners_id' => $answer['questioners_id'],
-                'value' => $answer['value'],
-            );
-        }
         $this->load->model('Answer_model');
-        $this->Answer_model->CreateAnswer($answersData);
+        $userId = $this->session->userdata('user_id');
+
+        $check = $this->Answer_model->CreateAnswer();
+
+        $data = [
+            'questioners_id' => $this->input->post('questioners_id'),
+            'answer_id' => $check,
+            'value' => $this->input->post('answer_value'),
+        ];
+        $this->Answer_model->CreateAnswerDetails();
     }
 
 }

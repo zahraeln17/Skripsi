@@ -20,7 +20,7 @@
                         </div>
                         <div class="col-md-12 mt-3">
                             <!-- start form question -->
-                            <form class="justify-content-center mt-3 pt-4 mb-5">
+                            <form class="justify-content-center mt-3 pt-4 mb-5" method="post" action="<?= base_url('create'); ?>">
                                 <div class="row">
                                     <div class="col-md-3 mt-3">
                                         Sangat Tidak Setuju
