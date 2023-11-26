@@ -17,6 +17,7 @@ class UserHandler extends CI_Controller{
             }else if ($user_type == 'mhs'){
                 $this->handleMhsRegisterRequest();
             }
+            redirect('votes', 'refresh');
         }else{
             // Handle post request
             $this->handleVoteWithGetRequest();
@@ -24,8 +25,7 @@ class UserHandler extends CI_Controller{
     }
 
     private function handleVoteWithGetRequest(){
-
-        $data['title'] = 'Votes';
+        $data['title'] = 'User Register';
         $this->load->view('templates/auth-header', $data);
         $this->load->view('votes/index');
         $this->load->view('templates/auth-footer');

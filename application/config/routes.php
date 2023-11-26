@@ -54,4 +54,5 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 // User Routes
-$route['votes'] = 'userhandler';
+$route['register-user'] = 'userhandler';
+$route['votes'] = 'votes';
