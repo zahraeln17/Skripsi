@@ -32,65 +32,65 @@
                                     </div>
                                     <div id="student-form" style="display: none;">
                                         <div class="form-group text-dark">
-                                            <input type="text" class="form-control form-control-user" id="student-name" name="student-name" placeholder="Masukkan Name" value="<?= set_value('student-name'); ?>" required>
+                                            <input type="text" class="form-control form-control-user" id="student-name" name="student-name" placeholder="Masukkan Name" value="<?= set_value('student-name'); ?>" >
                                         </div>
                                         <div class="form-group text-dark">
-                                            <input type="text" class="form-control form-control-user" id="student-nim" name="student-nim" placeholder="Masukkan NIM" value="<?= set_value('student-nim'); ?>" required>
+                                            <input type="text" class="form-control form-control-user" id="student-nim" name="student-nim" placeholder="Masukkan NIM" value="<?= set_value('student-nim'); ?>" >
                                         </div>
                                         <span class="text-dark">Program Studi</span>
                                         <div class="form-group text-dark mx-4">
                                             <div class="form-check form-check-inline">
-                                                <?php echo form_radio('program-studi', 'ilkom', set_radio('program-studi', 'ilkom', FALSE), 'id="program-studi-ilkom" class="form-check-input" required'); ?>
+                                                <?php echo form_radio('program-studi', 'ilkom', set_radio('program-studi', 'ilkom', FALSE), 'id="program-studi-ilkom" class="form-check-input" '); ?>
                                                 <label class="form-check-label" for="program-studi-ilkom">Ilmu Komputer</label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <?php echo form_radio('program-studi', 'pilkom', set_radio('program-studi', 'pilkom', FALSE), 'id="program-studi-pilkom" class="form-check-input" required'); ?>
+                                                <?php echo form_radio('program-studi', 'pilkom', set_radio('program-studi', 'pilkom', FALSE), 'id="program-studi-pilkom" class="form-check-input" '); ?>
                                                 <label class="form-check-label" for="program-studi-pilkom">Pendidikan Ilmu Komputer</label>
                                             </div>
                                         </div>
                                         <span class="text-dark">Angkatan</span>
                                         <div class="form-group text-dark mx-4">
                                             <div class="form-check form-check-inline">
-                                                <?php echo form_radio('angkatan', '2019', set_radio('angkatan', '2019', FALSE), 'id="angkatan-2019" class="form-check-input" required'); ?>
+                                                <?php echo form_radio('angkatan', '2019', set_radio('angkatan', '2019', FALSE), 'id="angkatan-2019" class="form-check-input" '); ?>
                                                 <label class="form-check-label" for="angkatan-2019">2019</label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <?php echo form_radio('angkatan', '2020', set_radio('angkatan', '2020', FALSE), 'id="angkatan-2020" class="form-check-input" required'); ?>
+                                                <?php echo form_radio('angkatan', '2020', set_radio('angkatan', '2020', FALSE), 'id="angkatan-2020" class="form-check-input" '); ?>
                                                 <label class="form-check-label" for="angkatan-2020">2020</label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <?php echo form_radio('angkatan', '2021', set_radio('angkatan', '2021', FALSE), 'id="angkatan-2021" class="form-check-input" required'); ?>
+                                                <?php echo form_radio('angkatan', '2021', set_radio('angkatan', '2021', FALSE), 'id="angkatan-2021" class="form-check-input" '); ?>
                                                 <label class="form-check-label" for="angkatan-2021">2021</label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <?php echo form_radio('angkatan', '2022', set_radio('angkatan', '2022', FALSE), 'id="angkatan-2022" class="form-check-input" required'); ?>
+                                                <?php echo form_radio('angkatan', '2022', set_radio('angkatan', '2022', FALSE), 'id="angkatan-2022" class="form-check-input" '); ?>
                                                 <label class="form-check-label" for="angkatan-2022">2022</label>
                                             </div>
                                         </div>
                                         <span class="text-dark">Jenis Kelamin</span>
                                         <div class="form-group text-dark mx-4">
                                             <div class="form-check mb-2 mt-2">
-                                                <?php echo form_radio('jenis-kelamin', '1', set_radio('jenis-kelamin', '1', FALSE), 'id="jenis-kelamin-laki" class="form-check-input" required'); ?>
+                                                <?php echo form_radio('jenis-kelamin', '1', set_radio('jenis-kelamin', '1', FALSE), 'id="jenis-kelamin-laki" class="form-check-input" '); ?>
                                                 <label class="form-check-label" for="jenis-kelamin-laki">laki-laki</label>
                                             </div>
                                             <div class="form-check mb-2 mt-2">
-                                                <?php echo form_radio('jenis-kelamin', '2', set_radio('jenis-kelamin', '2', FALSE), 'id="jenis-kelamin-perempuan" class="form-check-input" required'); ?>
+                                                <?php echo form_radio('jenis-kelamin', '2', set_radio('jenis-kelamin', '2', FALSE), 'id="jenis-kelamin-perempuan" class="form-check-input" '); ?>
                                                 <label class="form-check-label" for="jenis-kelamin-perempuan">perempuan</label>
                                             </div>
                                         </div>
                                     </div>
                                     <div id="dosen-form" style="display: none;">
                                         <div class="form-group text-dark mx-4">
-                                            <input type="text" class="form-control form-control-user" id="dosen-name" name="dosen-name" placeholder="Masukkan Name" value="<?= set_value('dosen-name'); ?>" required>
+                                            <input type="text" class="form-control form-control-user" id="dosen-name" name="dosen-name" placeholder="Masukkan Name" value="<?= set_value('dosen-name'); ?>" >
                                         </div>
                                         <span class="text-dark">Mengajar Program Studi</span>
                                         <div class="form-group">
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="program-studi" id="program-studi-ilkom" value="ilkom" required>
+                                                <input class="form-check-input" type="radio" name="program-studi" id="program-studi-ilkom" value="ilkom" >
                                                 <label class="form-check-label" for="program-studi-ilkom">Ilmu Komputer</label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="program-studi" id="program-studi-pilkom" value="pilkom" required>
+                                                <input class="form-check-input" type="radio" name="program-studi" id="program-studi-pilkom" value="pilkom" >
                                                 <label class="form-check-label" for="program-studi-pilkom">Pendidikan Ilmu Komputer</label>
                                             </div>
                                         </div>

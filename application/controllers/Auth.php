@@ -88,10 +88,8 @@ class Auth extends CI_Controller
                 'email' => htmlspecialchars($this->input->post('email', true)),
                 'password' => password_hash($this->input->post('password1'), PASSWORD_DEFAULT),
                 'is_admin' => 1,
-                'is_active' => 1,
-                'date_created' => time()
             ];
-            $this->db->insert('user', $data);
+            $this->db->insert('users', $data);
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
             Success! Your account has been created. Please login!</div>');
             redirect('auth');
