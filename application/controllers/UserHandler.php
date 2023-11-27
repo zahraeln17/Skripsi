@@ -14,10 +14,10 @@ class UserHandler extends CI_Controller{
             $user_type = $this->input->post('user-type');
             if ($user_type == 'dosen'){
                 $this->handleDosenRegisterRequest();
+                $userId = $this->session->userdata('user_id');
             }else if ($user_type == 'mhs'){
                 $this->handleMhsRegisterRequest();
                 $userId = $this->session->userdata('user_id');
-
             }
             if(ISSET($userId)){
                 redirect('votes', 'refresh');

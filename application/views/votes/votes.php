@@ -9,10 +9,15 @@
                     <!-- <?= $userId ?> -->
             
                     <p>Halaman 
-                    <?php foreach ($countAnswered as $row) : ?>
-                       <?php $currentAnswer = $row->count  + 1;
-                            echo $currentAnswer; ?>
-                    <?php endforeach; ?> / 
+                    <?php $currentAnswer = 1; ?>
+                    <?php if ($countAnswered == 0): ?>
+                        1
+                    <?php else: ?>
+                        <?php foreach ($countAnswered as $row): ?>
+                            <?php $currentAnswer = $row->count + 1; ?>
+                            <?= $currentAnswer; ?>
+                        <?php endforeach; ?>
+                    <?php endif; ?> / 
                     <?= $totalQuestions ?></p>
                 </div>
                 <div class="col-lg-12 mt-5">
