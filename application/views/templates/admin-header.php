@@ -17,6 +17,11 @@
 
     <!-- Custom styles for this template-->
     <link href="<?= base_url('assets/'); ?>css/sb-admin-2.min.css" rel="stylesheet">
+    
+    <!-- Custom styles for this page -->
+    <link href="<?= base_url('assets/'); ?>vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+
     <style>
         /* Custom Styles */
         .float-button {
@@ -31,25 +36,4 @@
 </head>
 
 <body id="page-top">
-    <!-- Header -->
-    <header class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-        <!-- Logo and Name on Left -->
-        <a class="navbar-brand" href="#">
-            <img src="path/to/your/logo.png" width="60" height="60" class="d-inline-block align-top" alt="">
-            <span style="color:#e74a3b; font-weight: bold;" class="ml-2">SPADA Assesment</span>
-        </a>
-
-        <!-- Spacer for Alignment -->
-        <div class="d-none d-sm-block mr-auto"></div>
-
-        <!-- Other Header Elements (if any) -->
-        <!-- Example: Navigation Links on the Right -->
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-            <!-- More nav-items can be added here -->
-        </ul>
-    </header>
-    <!-- Page Wrapper -->
     <div id="wrapper">
