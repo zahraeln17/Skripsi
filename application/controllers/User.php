@@ -2,7 +2,7 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class User extends CI_Controller
-{   
+{
     public function __construct()
     {
         parent::__construct();
@@ -50,15 +50,40 @@ class User extends CI_Controller
 
     public function hasil_kuesioner()
     {
+       
+        $dataChartBar =  $this->Question_model->getQuestionnaireWithAverage();
+        // var_dump($data['questions']);
+        // die;
+        $labels = [];
+        $data = [];
+
+        foreach ($dataChartBar as $row) {
+            $labels[] = $row->questioner_text; // Assuming 'question_title' holds the title of questions
+            $data[] =  ($row->average_value / 5) * 100 ; // Assuming 'average_value' holds the average value
+        }
+
+        $chart_data = [
+            'labels' => $labels,
+            'datasets' => [
+                [
+                    'label' => 'Average Answer',
+                    'backgroundColor' => '#4e73df',
+                    'hoverBackgroundColor' => '#2e59d9',
+                    'borderColor' => '#4e73df',
+                    'data' => $data,
+                ],
+            ],
+        ];
+
+        $data['chart_data'] = json_encode($chart_data);
         $data['title'] = 'Hasil Kuesioner';
         $data['user'] = $this->db->get_where('users', ['email' => $this->session->userdata('email')])->row_array();
         $data['questions'] = $this->Question_model->getQuestionnaireWithAverage();
-        // var_dump($data['questions']);
-        // die;
+
         $this->load->view('templates/admin-header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
         $this->load->view('user/hasil_kuesioner', $data);
-        $this->load->view('templates/footer');
+        $this->load->view('templates/footer', $data);
     }
 }
