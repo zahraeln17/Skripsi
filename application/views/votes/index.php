@@ -19,9 +19,9 @@
                                 </div>
                                 <form class="user" method="post" action="<?= base_url('register-user'); ?>">
                                     <?php echo form_error('program-studi', '<div class="text-danger">', '</div>'); ?>
-                                    <div class="form-group" id="user-type">
+                                    <div class="form-group justify-content-center" id="user-type">
                                         <input type="radio" name="user-type" id="user-type-dosen" value="dosen" class="pl-7" onclick="showLecturerForm()">
-                                        <label for="user-type-dosen">
+                                        <label for="user-type-dosen mx-4">
                                             <h3 class="h5 mb-4 mt-4" style="color: #2D2C73;"><b>Dosen</b></h3>
                                         </label>
 

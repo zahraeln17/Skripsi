@@ -1,12 +1,14 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 // Move to model folder
-class Question_model extends CI_Model{
-    public function CreateQuestion(){
+class Question_model extends CI_Model
+{
+    public function CreateQuestion()
+    {
         // Question must be array
         $questions = $this->input->post('questions');
         $data = array();
-        foreach($questions as $question){
+        foreach ($questions as $question) {
             $data[] = array(
                 'question_text' => $question,
             );
@@ -14,12 +16,14 @@ class Question_model extends CI_Model{
         $this->_insertBatchQuestion($data);
     }
 
-    public function ViewQuestion(){
+    public function ViewQuestion()
+    {
         $question = $this->_getQuestion();
         return $question;
     }
 
-    public function getAnswerId($id){
+    public function getAnswerId($id)
+    {
         $this->db->select('*');
         $this->db->from('answers');
         $this->db->where('user_id', $id);
@@ -27,7 +31,8 @@ class Question_model extends CI_Model{
         return $query->result();
     }
 
-    public function checkUserAnswer($answerId){
+    public function checkUserAnswer($answerId)
+    {
         $this->db->select('*');
         $this->db->from('answer_details');
         $this->db->where('answer_id	', $answerId);
@@ -37,7 +42,8 @@ class Question_model extends CI_Model{
         return $query->result();
     }
 
-    public function countAnswered($answerId){
+    public function countAnswered($answerId)
+    {
         $this->db->select('count(*) as count');
         $this->db->from('answer_details');
         $this->db->where('answer_id', $answerId);
@@ -45,7 +51,8 @@ class Question_model extends CI_Model{
         return $query->result();
     }
 
-    public function getFirstQuestion() {
+    public function getFirstQuestion()
+    {
         $this->db->select('questioners.*, topics.title, topics.sub_title');
         $this->db->from('questioners');
         $this->db->join('topics', 'questioners.topic_id = topics.id');
@@ -55,8 +62,9 @@ class Question_model extends CI_Model{
         return $query->row(); // Return the first row as an object
     }
 
-     // Fetch the next question based on the last question ID
-     public function getCurrentQuestion($lastQuestionId) {
+    // Fetch the next question based on the last question ID
+    public function getCurrentQuestion($lastQuestionId)
+    {
         $this->db->select('questioners.*, topics.title, topics.sub_title');
         $this->db->from('questioners');
         $this->db->join('topics', 'questioners.topic_id = topics.id');
@@ -66,8 +74,9 @@ class Question_model extends CI_Model{
         $query = $this->db->get();
         return $query->row(); // Return the next row as an object
     }
-    
-    public function getQuestionnaireWithAverage() {
+
+    public function getQuestionnaireWithAverage()
+    {
         $this->db->select('questioners.id, questioners.questioner_text, COUNT(answer_details.questioners_id) AS answer_count, AVG(answer_details.value) AS average_value');
         $this->db->from('questioners');
         $this->db->join('answer_details', 'questioners.id = answer_details.questioners_id', 'left');
@@ -77,11 +86,25 @@ class Question_model extends CI_Model{
 
         return $results;
     }
-    private function _insertBatchQuestion($data){
+
+    public function getAvfByTopic()
+    {
+        $query = $this->db->select('questioners.id, questioners.questioner_text AS question_title, COUNT(answer_details.questioners_id) AS answer_count, AVG(answer_details.value) AS average_value')
+            ->from('questioners')
+            ->join('answer_details', 'questioners.id = answer_details.questioners_id', 'left')
+            ->group_by('questioners.id, questioners.questioner_text')
+            ->get();
+
+        $result = $query->result_array();
+    }
+
+    private function _insertBatchQuestion($data)
+    {
         $this->db->insert_batch('questioners', $data);
     }
 
-    private function _getQuestion(){
+    private function _getQuestion()
+    {
         $this->db->select('questioners.questioner_text, questioners.id, topics.title, topics.sub_title');
         $this->db->from('questioners');
         $this->db->join('topics', 'questioners.topic_id = topics.id');

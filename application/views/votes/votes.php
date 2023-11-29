@@ -1,9 +1,9 @@
-<div class="container">
+<div class="container mb-5">
     <!-- Page Content -->
     <?php if (isset($questions) && $questions ) {
         if ($status == "on-progress") {
     ?>
-            <div class="row">
+            <div class="row mb-4">
                 <div class="col-lg-12 text-right text-gray-600">
                     <!-- Page Number -->
                     <!-- <?= $userId ?> -->
@@ -20,7 +20,7 @@
                     <?php endif; ?> / 
                     <?= $totalQuestions ?></p>
                 </div>
-                <div class="col-lg-12 mt-5">
+                <div class="col-lg-12 mt-3">
                     <h5 class="text-dark pt-3 font-weight-bold">
                         <?= $questions->title ?>
                     </h5>
@@ -135,7 +135,7 @@
             </div>
     <?php  } } else { ?>
     <!-- Outer Row -->
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mb-4">
 
         <div class="col-lg-12">
 
