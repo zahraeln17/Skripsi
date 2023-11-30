@@ -17,6 +17,7 @@
 
     <!-- Custom styles for this template-->
     <link href="<?= base_url('assets/'); ?>css/sb-admin-2.min.css" rel="stylesheet">
+
     <style>
         /* Custom Styles */
         .float-button {
@@ -24,8 +25,9 @@
             bottom: 20px;
             right: 20px;
             z-index: 1000;
-            background-color: #e74a3b ;
-            color:white; /* Adjust as needed */
+            background-color: #e74a3b;
+            color: white;
+            /* Adjust as needed */
         }
     </style>
 </head>
@@ -44,12 +46,7 @@
 
         <!-- Other Header Elements (if any) -->
         <!-- Example: Navigation Links on the Right -->
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-            <!-- More nav-items can be added here -->
-        </ul>
+        <!-- More nav-items can be added here -->
     </header>
     <!-- Page Wrapper -->
     <div id="wrapper">

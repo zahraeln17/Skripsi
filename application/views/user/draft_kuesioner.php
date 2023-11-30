@@ -17,8 +17,8 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Topic</th>
-                            <th>Sub Topic</th>
+                            <th>Metode</th>
+                            <th>Variabel</th>
                             <th>Question</th>
                             <th>Action</th>
                         </tr>
@@ -26,27 +26,27 @@
                     <tfoot>
                         <tr>
                             <th>No</th>
-                            <th>Topic</th>
-                            <th>Sub Topic</th>
+                            <th>Metode</th>
+                            <th>Variabel</th>
                             <th>Question</th>
                             <th>Action</th>
                         </tr>
                     </tfoot>
                     <tbody>
                         <?php $no = 1;
-                            foreach ($questions as $key => $value) : ?>
-                        <tr>
-                            <td><?=$no++?></td>
-                            <td><?= $value->title ?></td>
-                            <td><?= $value->sub_title ?></td>
-                            <td><?= $value->questioner_text ?></td>
-                            <td width="15%">
-                                <a href="#" class="btn btn-warning btn-small"> <i class="fas fa-pencil-alt"></i> </a>
-                                <a href="#" class="btn btn-danger btn-small"><i class="fas fa-trash"></i> </a>
-                            </td>
-                        </tr>
+                        foreach ($questions as $key => $value) : ?>
+                            <tr>
+                                <td><?= $no++ ?></td>
+                                <td><?= $value->title ?></td>
+                                <td><?= $value->sub_title ?></td>
+                                <td><?= $value->questioner_text ?></td>
+                                <td width="15%">
+                                    <a href="#" class="btn btn-warning btn-small"> <i class="fas fa-pencil-alt"></i> </a>
+                                    <a href="#" class="btn btn-danger btn-small"><i class="fas fa-trash"></i> </a>
+                                </td>
+                            </tr>
                         <?php endforeach ?>
-                       
+
                     </tbody>
                 </table>
             </div>

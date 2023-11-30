@@ -17,11 +17,11 @@
 
     <!-- Custom styles for this template-->
     <link href="<?= base_url('assets/'); ?>css/sb-admin-2.min.css" rel="stylesheet">
-    
+
     <!-- Custom styles for this page -->
     <link href="<?= base_url('assets/'); ?>vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         /* Custom Styles */
         .float-button {
@@ -29,8 +29,9 @@
             bottom: 20px;
             right: 20px;
             z-index: 1000;
-            background-color: #e74a3b ;
-            color:white; /* Adjust as needed */
+            background-color: #e74a3b;
+            color: white;
+            /* Adjust as needed */
         }
     </style>
 </head>
