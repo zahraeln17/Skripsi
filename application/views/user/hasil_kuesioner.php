@@ -7,19 +7,33 @@
     <p class="mb-4">HASIL KUISIONER</a>.</p>
     <!-- <a href="#" class="btn btn-primary mb-3">Tambah Kuisioner</a> -->
     <!-- DataTales Example -->
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Bar Chart</h6>
-        </div>
-        <div class="card-body">
-            <div class="chart-bar">
-                <canvas id="myBarChart"></canvas>
-            </div>
-            <hr>
-            Styling for the bar chart can be found in the
-            <code>/js/demo/chart-bar-demo.js</code> file.
-        </div>
+    <div class="row">
+        <?php if (isset($chart_data)) : ?>
+            <?php foreach ($chart_data as $key => $value) : ?>
+                <div class="col-md-6">
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary"> <?= $value['subTitle'] ?></h6>
+                        </div>
+                        <div class="card-body mb-5">
+                            <div class="chart-bar mb-5" style="width: 600px; overflow-x: auto;">
+                                <canvas id="myBarChart-<?= $key ?>"></canvas>
+                            </div>
+                            <hr>
+                            Keterangan :
+                            <ul>
+                                <?php foreach ($value['list_questions'] as $key => $question) {
+                                    echo  $question['id'].' => '. $question['question'].'<br/>';
+                                } ?>
+                                   
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach ?>
+        <?php endif ?>
     </div>
+
 
     <div class="card shadow mb-4">
         <div class="card-header py-3">
