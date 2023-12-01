@@ -67,7 +67,7 @@
                                 <td class="text-center"><?= $value->answer_count ?></td>
                                 <td class="text-center" width="20%">
                                     <div class="progress">
-                                        <div class="progress-bar" role="progressbar" style="width: <?php echo ($value->average_value / 5) * 100; ?>%;" aria-valuenow="<?php echo $value->average_value; ?>" aria-valuemin="0" aria-valuemax="5"> <?= intval($value->average_value) ?> out of 5</div>
+                                        <div class="progress-bar" role="progressbar" style="width: <?php echo ($value->average_value / 5) * 100; ?>%;" aria-valuenow="<?php echo $value->average_value; ?>" aria-valuemin="0" aria-valuemax="5"> <?=($value->average_value / 5) * 100; ?>%</div>
                                     </div>
 
                                 </td>

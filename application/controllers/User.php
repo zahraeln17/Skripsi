@@ -80,6 +80,8 @@ class User extends CI_Controller
                 ],
             ];
 
+            // Variable name for chart value??
+
             $topicHeader[] = [
                 'subTitle' =>  $topic->sub_title,
                 'list_questions' => $questions,
