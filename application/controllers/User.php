@@ -50,32 +50,54 @@ class User extends CI_Controller
 
     public function hasil_kuesioner()
     {
-       
-        $dataChartBar =  $this->Question_model->getQuestionnaireWithAverage();
-        // var_dump($data['questions']);
-        // die;
         $labels = [];
         $data = [];
+        $topicHeader = [];
+        $questions = [];
+        // $dataChartBar =  $this->Question_model->getQuestionnaireWithAverage();
+        $topics =  $this->Question_model->getAllTopic();
+        // getQuestionnaireWithAverageByTopicId
+        
+        foreach ($topics as $topic) {
+            $dataChartBar = $this->Question_model->getQuestionnaireWithAverageByTopicId( $topic->id );
+            foreach ($dataChartBar as $row) {
+                $labels[] = $row->id; // Assuming 'question_title' holds the title of questions
+                $data[] =  ($row->average_value / 5) * 100 ;
+                $questions[] = [ 'id' =>  $row->id,
+                                    'question' => $row->questioner_text ];// Assuming 'average_value' holds the average value
+            }
+    
+            $chart_data = [
+                'labels' => $labels,
+                'datasets' => [
+                    [
+                        'label' => 'Average Answer',
+                        'backgroundColor' => '#4e73df',
+                        'hoverBackgroundColor' => '#2e59d9',
+                        'borderColor' => '#4e73df',
+                        'data' => $data,
+                    ],
+                ],
+            ];
 
-        foreach ($dataChartBar as $row) {
-            $labels[] = $row->questioner_text; // Assuming 'question_title' holds the title of questions
-            $data[] =  ($row->average_value / 5) * 100 ; // Assuming 'average_value' holds the average value
+            // Variable name for chart value??
+
+            $topicHeader[] = [
+                'subTitle' =>  $topic->sub_title,
+                'list_questions' => $questions,
+                'data' => json_encode($chart_data)
+            ];
+
         }
 
-        $chart_data = [
-            'labels' => $labels,
-            'datasets' => [
-                [
-                    'label' => 'Average Answer',
-                    'backgroundColor' => '#4e73df',
-                    'hoverBackgroundColor' => '#2e59d9',
-                    'borderColor' => '#4e73df',
-                    'data' => $data,
-                ],
-            ],
-        ];
+        // echo '<pre>';
+        // highlight_string(var_export($topicHeader, true));
+        // echo '</pre>';
+        // die;
 
-        $data['chart_data'] = json_encode($chart_data);
+       
+
+        $data['chart_data'] = $topicHeader;
         $data['title'] = 'Hasil Kuesioner';
         $data['user'] = $this->db->get_where('users', ['email' => $this->session->userdata('email')])->row_array();
         $data['questions'] = $this->Question_model->getQuestionnaireWithAverage();

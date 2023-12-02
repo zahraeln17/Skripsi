@@ -91,80 +91,104 @@
         return s.join(dec);
     }
 
-    <?php if(ISSET($chart_data)){ ?>
-    // Bar Chart Example
-    var ctx = document.getElementById("myBarChart");
-    var myBarChart = new Chart(ctx, {
-        type: 'bar',
-        data: <?= $chart_data?>,
-        options: {
-            maintainAspectRatio: false,
-            layout: {
-                padding: {
-                    left: 10,
-                    right: 25,
-                    top: 25,
-                    bottom: 0
-                }
-            },
-            scales: {
-                xAxes: [{
-                    time: {
-                        unit: 'month'
-                    },
-                    gridLines: {
-                        display: false,
-                        drawBorder: false
-                    },
-                    ticks: {
-                        maxTicksLimit: 6
-                    },
-                    maxBarThickness: 25,
-                }],
-                yAxes: [{
-                    ticks: {
-                        min: 0,
-                        max: 5,
-                        maxTicksLimit: 5,
-                        padding: 10,
-                        // Include a dollar sign in the ticks
-                        callback: function(value, index, values) {
-                            return number_format(value);
+    <?php if (isset($chart_data)) { ?>
+        // Bar Chart Example
+        <?php foreach ($chart_data as $key => $value) : ?>
+            var ctx = document.getElementById("myBarChart-<?= $key ?>");
+            var myBarChart = new Chart(ctx, {
+                type: 'bar',
+                data: <?= $value['data'] ?>,
+                options: {
+                    maintainAspectRatio: false,
+                    layout: {
+                        padding: {
+                            left: 20,
+                            right: 25,
+                            top: 25,
+                            bottom: 0
                         }
                     },
-                    gridLines: {
-                        color: "rgb(234, 236, 244)",
-                        zeroLineColor: "rgb(234, 236, 244)",
-                        drawBorder: false,
-                        borderDash: [2],
-                        zeroLineBorderDash: [2]
-                    }
-                }],
-            },
-            legend: {
-                display: false
-            },
-            tooltips: {
-                titleMarginBottom: 10,
-                titleFontColor: '#6e707e',
-                titleFontSize: 14,
-                backgroundColor: "rgb(255,255,255)",
-                bodyFontColor: "#858796",
-                borderColor: '#dddfeb',
-                borderWidth: 1,
-                xPadding: 15,
-                yPadding: 15,
-                displayColors: false,
-                caretPadding: 10,
-                callbacks: {
-                    label: function(tooltipItem, chart) {
-                        var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-                        return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
-                    }
+                    scales: {
+                        xAxes: [{
+                            time: {
+                                unit: 'month'
+                            },
+                            gridLines: {
+                                display: false,
+                                drawBorder: false
+                            },
+                            ticks: {
+                                maxTicksLimit: 10,
+                                // anchor: 'end',
+                                // align: 'top',
+                                autoSkip: false, // Disable auto-skipping of labels
+                                maxRotation: 0, // Set maximum rotation angle to 0 degrees
+                                callback: function(value) { // Custom callback function for label formatting
+                                    var words = value.split(' ');
+                                    var lines = [];
+                                    var line = '';
+
+                                    for (var i = 0; i < words.length; i++) {
+                                        line += words[i] + ' ';
+                                        if ((i + 1) % 5 === 0 || i === words.length - 1) {
+                                            lines.push(line);
+                                            line = '';
+                                        }
+                                    }
+
+                                    return lines;
+                                }
+                            },
+                            maxBarThickness: 100,
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                min: 0,
+                                max: 100,
+                                maxTicksLimit: 5,
+                                padding: 10,
+                                // Include a dollar sign in the ticks
+                                callback: function(value, index, values) {
+                                    return number_format(value);
+                                }
+                            },
+                            gridLines: {
+                                color: "rgb(234, 236, 244)",
+                                zeroLineColor: "rgb(234, 236, 244)",
+                                drawBorder: false,
+                                borderDash: [2],
+                                zeroLineBorderDash: [2]
+                            }
+                        }],
+                    },
+                    legend: {
+                        display: false
+                    },
+                    tooltips: {
+                        titleMarginBottom: 10,
+                        titleFontColor: '#6e707e',
+                        titleFontSize: 14,
+                        backgroundColor: "rgb(255,255,255)",
+                        bodyFontColor: "#858796",
+                        borderColor: '#dddfeb',
+                        borderWidth: 1,
+                        xPadding: 15,
+                        yPadding: 15,
+                        displayColors: false,
+                        caretPadding: 10,
+                        callbacks: {
+                            label: function(tooltipItem, chart) {
+                                var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                                // var label = chart.datasets[tooltipItem.dataIndex];
+                    
+                                return datasetLabel + ' ' + number_format(tooltipItem.yLabel) + '% ';
+                                // return label;
+                            }
+                        }
+                    },
                 }
-            },
-        }
-    });
+            });
+        <?php endforeach ?>
     <?php
     }
     ?>

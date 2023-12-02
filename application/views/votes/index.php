@@ -21,11 +21,11 @@
                                     <?php echo form_error('program-studi', '<div class="text-danger">', '</div>'); ?>
                                     <div class="form-group justify-content-center" id="user-type">
                                         <input type="radio" name="user-type" id="user-type-dosen" value="dosen" class="pl-7" onclick="showLecturerForm()">
-                                        <label for="user-type-dosen mx-4">
+                                        <label for="user-type-dosen" class="mr-3">
                                             <h3 class="h5 mb-4 mt-4" style="color: #2D2C73;"><b>Dosen</b></h3>
                                         </label>
 
-                                        <input type="radio" name="user-type" id="user-type-mhs" value="mhs" onclick="showStudentForm()">
+                                        <input type="radio" name="user-type" id="user-type-mhs" class="ml-5" value="mhs" onclick="showStudentForm()">
                                         <label for="user-type-mhs">
                                             <h3 class="h5 mb-4 mt-4" style="color: #2D2C73;"><b>Mahasiswa</b></h3>
                                         </label>

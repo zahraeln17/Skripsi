@@ -87,6 +87,28 @@ class Question_model extends CI_Model
         return $results;
     }
 
+    public function getQuestionnaireWithAverageByTopicId($topics)
+    {
+        $this->db->select('questioners.id, questioners.questioner_text, COUNT(answer_details.questioners_id) AS answer_count, AVG(answer_details.value) AS average_value');
+        $this->db->from('questioners');
+        $this->db->join('answer_details', 'questioners.id = answer_details.questioners_id', 'left');
+        $this->db->where('topic_id', $topics);
+        $this->db->group_by('questioners.id, questioners.questioner_text');
+        $query = $this->db->get();
+        $results = $query->result();
+
+        return $results;
+    }
+    public function getAllTopic(){
+        $this->db->select('topics.*');
+        $this->db->from('topics');
+        $this->db->join('questioners', 'questioners.topic_id = topics.id');
+        $this->db->group_by('topics.id');
+        $query = $this->db->get();
+        $results = $query->result();
+
+        return $results;
+    }
     public function getAvfByTopic()
     {
         $query = $this->db->select('questioners.id, questioners.questioner_text AS question_title, COUNT(answer_details.questioners_id) AS answer_count, AVG(answer_details.value) AS average_value')
