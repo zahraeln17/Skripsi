@@ -59,6 +59,7 @@ $route['votes'] = 'votes';
 
 // post answer
 $route['votes/create'] = 'votes/storeQuestionAnswer';
+$route['votes/home'] = 'votes/home';
 
 // admin
 $route['admin/dashboard'] = 'admin/dashboard';
