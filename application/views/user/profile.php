@@ -19,7 +19,7 @@
                         <div class="col-lg">
                             <div class="p-0">
                                 <form class="user" method="post" action="<?= base_url('auth'); ?>">
-                                    <img class="img-profile rounded mx-auto d-block mb-5" src="<?= base_url('assets/img/user1.png'); ?>">
+                                    <img class="img-profile rounded mx-auto d-block mb-5" src="<?= base_url('assets/img/user.png'); ?>">
                                     <div class="form-group">
                                         <p class="form-control form-control-user p-2 pl-3">Zahra Elgysha</p>
                                     </div>

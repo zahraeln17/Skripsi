@@ -3,7 +3,7 @@
     <!-- Outer Row -->
     <div class="row justify-content-center">
 
-        <div class="col-lg-5">
+        <div class="col-lg-6 mt-5">
 
             <div class="card o-hidden border-0 shadow-lg my-5">
                 <div class="card-body p-0">
@@ -19,23 +19,23 @@
                                 </div>
                                 <form class="user" method="post" action="<?= base_url('register-user'); ?>">
                                     <?php echo form_error('program-studi', '<div class="text-danger">', '</div>'); ?>
-                                    <div class="form-group justify-content-center" id="user-type">
-                                        <input type="radio" name="user-type" id="user-type-dosen" value="dosen" class="pl-7" onclick="showLecturerForm()">
-                                        <label for="user-type-dosen" class="mr-3">
+                                    <div class="form-group d-flex justify-content-center" id="user-type">
+                                        <input type="radio" name="user-type" id="user-type-dosen" value="dosen" class="mb-4 mt-3" onclick="showLecturerForm()">
+                                        <label for="user-type-dosen" class="mr-3 ml-2">
                                             <h3 class="h5 mb-4 mt-4" style="color: #2D2C73;"><b>Dosen</b></h3>
                                         </label>
 
-                                        <input type="radio" name="user-type" id="user-type-mhs" class="ml-5" value="mhs" onclick="showStudentForm()">
-                                        <label for="user-type-mhs">
+                                        <input type="radio" name="user-type" id="user-type-mhs" class="mt-3 mb-4 ml-5" value="mhs" onclick="showStudentForm()">
+                                        <label for="user-type-mhs" class="ml-2">
                                             <h3 class="h5 mb-4 mt-4" style="color: #2D2C73;"><b>Mahasiswa</b></h3>
                                         </label>
                                     </div>
                                     <div id="student-form" style="display: none;">
                                         <div class="form-group text-dark">
-                                            <input type="text" class="form-control form-control-user" id="student-name" name="student-name" placeholder="Masukkan Name" value="<?= set_value('student-name'); ?>" >
+                                            <input type="text" class="form-control form-control-user" id="student-name" name="student-name" placeholder="Masukkan Name" value="<?= set_value('student-name'); ?>">
                                         </div>
                                         <div class="form-group text-dark">
-                                            <input type="text" class="form-control form-control-user" id="student-nim" name="student-nim" placeholder="Masukkan NIM" value="<?= set_value('student-nim'); ?>" >
+                                            <input type="text" class="form-control form-control-user" id="student-nim" name="student-nim" placeholder="Masukkan NIM" value="<?= set_value('student-nim'); ?>">
                                         </div>
                                         <span class="text-dark">Program Studi</span>
                                         <div class="form-group text-dark mx-4">
@@ -81,16 +81,16 @@
                                     </div>
                                     <div id="dosen-form" style="display: none;">
                                         <div class="form-group text-dark mx-4">
-                                            <input type="text" class="form-control form-control-user" id="dosen-name" name="dosen-name" placeholder="Masukkan Name" value="<?= set_value('dosen-name'); ?>" >
+                                            <input type="text" class="form-control form-control-user" id="dosen-name" name="dosen-name" placeholder="Masukkan Name" value="<?= set_value('dosen-name'); ?>">
                                         </div>
                                         <span class="text-dark">Mengajar Program Studi</span>
                                         <div class="form-group">
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="program-studi" id="program-studi-ilkom" value="ilkom" >
+                                                <input class="form-check-input" type="radio" name="program-studi" id="program-studi-ilkom" value="ilkom">
                                                 <label class="form-check-label" for="program-studi-ilkom">Ilmu Komputer</label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="program-studi" id="program-studi-pilkom" value="pilkom" >
+                                                <input class="form-check-input" type="radio" name="program-studi" id="program-studi-pilkom" value="pilkom">
                                                 <label class="form-check-label" for="program-studi-pilkom">Pendidikan Ilmu Komputer</label>
                                             </div>
                                         </div>
