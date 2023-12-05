@@ -37,7 +37,7 @@
     <header class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
         <!-- Logo and Name on Left -->
         <a class="navbar-brand" href="#">
-            <img src="path/to/your/logo.png" width="60" height="60" class="d-inline-block align-top" alt="">
+            <!--<img src="path/to/your/logo.png" width="60" height="60" class="d-inline-block align-top" alt="">-->
             <span style="color:#e74a3b; font-weight: bold;" class="ml-2">SPADA Assesment</span>
         </a>
 
