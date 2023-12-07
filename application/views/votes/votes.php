@@ -125,7 +125,8 @@
                             <div class="row">
                                 <div class="col-md-12 mt-3">
                                     <div class="text-white"> Terimakasih Telah Menajawab hingga selesai. Data yang ada masukan sangat berarti bagi riset kami. <br/> Klik Selesai untuk keluar dari halaman ini.</div>
-                                    <div class="text-white"> <button class="btn btn-primary mt-5">Selesai</button></div>
+                                    <div class="text-white">
+                                        <a href="<?= base_url('votes/home'); ?>"><button class="btn btn-primary mt-5" >Selesai</button></a></div>
                                 </div>
                             </div>
 

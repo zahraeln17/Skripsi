@@ -76,7 +76,7 @@
                                     labels: ['2019', '2020', '2021', '2022'],
                                     datasets: [{
                                         label: 'Responses',
-                                        data: [<?= $a2019 ?>, <?= $a2020 ?>, <?= $a2021 ?>, <?= $a2022 ?>], // Example data, replace with your data
+                                        data: [3, 1, 4, 2], // Example data, replace with your data
                                         backgroundColor: [
                                             'rgba(255, 255, 255, 1)', // White background color
                                             'rgba(255, 255, 255, 1)',

@@ -45,19 +45,16 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Question</th>
-                            <th>Total User Answer</th>
-                            <th>Result </th>
+                            <th>Nama</th>
+                            <!-- Keys from the question -->
+                            <!-- <th>variableA1</th>
+                            <th>variableA2</th>
+                            <th>variableB1</th>
+                            <th>variableB2</th> -->
+                            <!-- etc -->
                         </tr>
                     </thead>
-                    <tfoot>
-                        <tr>
-                            <th>No</th>
-                            <th>Question</th>
-                            <th>Total User Answer</th>
-                            <th>Result </th>
-                        </tr>
-                    </tfoot>
+
                     <tbody>
                         <?php $no = 1;
                         foreach ($questions as $key => $value) : ?>
