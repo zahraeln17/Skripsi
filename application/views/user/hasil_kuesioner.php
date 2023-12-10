@@ -4,9 +4,8 @@
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800"><?= $title; ?></h1>
 
-    <p class="mb-4">HASIL KUISIONER</a>.</p>
-    <!-- <a href="#" class="btn btn-primary mb-3">Tambah Kuisioner</a> -->
-    <!-- DataTales Example -->
+    <p class="mb-4">HASIL KUESIONER</p>
+
     <div class="row">
         <?php if (isset($chart_data)) : ?>
             <?php foreach ($chart_data as $key => $value) : ?>
@@ -16,64 +15,101 @@
                             <h6 class="m-0 font-weight-bold text-primary"> <?= $value['subTitle'] ?></h6>
                         </div>
                         <div class="card-body mb-5">
-                            <div class="chart-bar mb-5" style="width: 600px; overflow-x: auto;">
+                            <div class="chart-bar mb-5" style="width: 100%; overflow-x: auto;">
                                 <canvas id="myBarChart-<?= $key ?>"></canvas>
                             </div>
                             <hr>
-                            Keterangan :
-                            <ul>
-                                <?php foreach ($value['list_questions'] as $key => $question) {
-                                    echo  $question['id'].' => '. $question['question'].'<br/>';
-                                } ?>
-                                   
-                            </ul>
                         </div>
                     </div>
                 </div>
+
+                <script>
+                    // Parse JSON data and options
+                    var chartData<?= $key ?> = <?= $value['data']; ?>;
+                    var chartOptions<?= $key ?> = <?= $value['options']; ?>;
+
+                    chartOptions<?= $key ?>.plugins = chartOptions<?= $key ?>.plugins || {};
+                    chartOptions<?= $key ?>.plugins.tooltip = {
+                        callbacks: {
+                            title: (context) => {
+                                console.log(context[0].label)
+                                return context[0].label.replaceAll(',', ' ');
+                            }
+                        }
+                    };
+
+                    chartOptions<?= $key ?>.scales = chartOptions<?= $key ?>.scales || {};
+
+                    var maxDataValue = Math.max(...chartData<?= $key ?>.datasets[0].data);
+
+                    var maxYValue = Math.min(maxDataValue, 100);
+                    chartOptions<?= $key ?>.scales = {
+                        yAxes: [{
+                            display: true,
+                            ticks: {
+                                max: 100,  
+                                stepSize: 10,
+                                beginAtZero: true 
+                            }
+                        }]
+                    }
+                    
+
+                    var ctx<?= $key ?> = document.getElementById('myBarChart-<?= $key ?>').getContext('2d');
+
+                    var myBarChart<?= $key ?> = new Chart(ctx<?= $key ?>, {
+                        type: 'bar',
+                        data: chartData<?= $key ?>,
+                        options: chartOptions<?= $key ?>
+                    });
+                </script>
             <?php endforeach ?>
         <?php endif ?>
     </div>
+</div>
 
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Data Lengkap Draft Kuisioner.</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama</th>
+                        <!-- Dynamically generated column headers -->
+                        <?php
+                        foreach ($result_tables[0] as $columnName => $value) {
+                            if ($columnName !== 'user_name') {
+                                echo "<th>$columnName</th>";
+                            }
+                        }
+                        ?>
+                    </tr>
+                </thead>
 
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Data Lengkap Draft Kuisioner.</h6>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
+                <tbody>
+                    <?php
+                    $no = 1;
+                    foreach ($result_tables as $row) : ?>
                         <tr>
-                            <th>No</th>
-                            <th>Nama</th>
-                            <!-- Keys from the question -->
-                            <!-- <th>variableA1</th>
-                            <th>variableA2</th>
-                            <th>variableB1</th>
-                            <th>variableB2</th> -->
-                            <!-- etc -->
+                            <td><?= $no++ ?></td>
+                            <td><?= $row['user_name'] ?></td>
+                            <!-- Dynamically generated column values -->
+                            <?php
+                            foreach ($row as $columnName => $value) {
+                                if ($columnName !== 'user_name') {
+                                    echo "<td>$value</td>";
+                                }
+                            }
+                            ?>
                         </tr>
-                    </thead>
-
-                    <tbody>
-                        <?php $no = 1;
-                        foreach ($questions as $key => $value) : ?>
-                            <tr>
-                                <td><?= $no++ ?></td>
-                                <td><?= $value->questioner_text ?></td>
-                                <td class="text-center"><?= $value->answer_count ?></td>
-                                <td class="text-center" width="20%">
-                                    <div class="progress">
-                                        <div class="progress-bar" role="progressbar" style="width: <?php echo ($value->average_value / 5) * 100; ?>%;" aria-valuenow="<?php echo $value->average_value; ?>" aria-valuemin="0" aria-valuemax="5"> <?=($value->average_value / 5) * 100; ?>%</div>
-                                    </div>
-
-                                </td>
-                            </tr>
-                        <?php endforeach ?>
-
-                    </tbody>
-                </table>
-            </div>
+                    <?php endforeach ?>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
+

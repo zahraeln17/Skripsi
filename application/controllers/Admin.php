@@ -61,4 +61,12 @@ class Admin extends CI_Controller{
         $this->load->view('templates/footer');
         
     }
+
+    public function CreateQuestion(){
+        $this->load->view('admin/createQuestion');
+    }
+
+    public function EditQuestion(){
+        $this->load->view('admin/editQuestion');
+    }
 }

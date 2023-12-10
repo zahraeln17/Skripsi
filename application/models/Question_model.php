@@ -119,6 +119,44 @@ class Question_model extends CI_Model
 
         $result = $query->result_array();
     }
+    public function getChartValue(){
+        $sql = "
+            SELECT
+                t.id AS topic_id,
+                t.sub_title AS topic_title,
+                AVG(CASE WHEN ad.value = 1 THEN ad.value ELSE 0 END) AS avg_value_1,
+                AVG(CASE WHEN ad.value = 2 THEN ad.value ELSE 0 END) AS avg_value_2,
+                AVG(CASE WHEN ad.value = 3 THEN ad.value ELSE 0 END) AS avg_value_3,
+                AVG(CASE WHEN ad.value = 4 THEN ad.value ELSE 0 END) AS avg_value_4,
+                AVG(CASE WHEN ad.value = 5 THEN ad.value ELSE 0 END) AS avg_value_5
+            FROM
+                topics t
+            JOIN
+                questioners q ON q.topic_id = t.id
+            JOIN
+                answer_details ad ON ad.questioners_id = q.id
+            LEFT JOIN
+                answers a ON ad.answer_id = a.id
+            GROUP BY
+                t.id, t.title;
+        ";
+        $query = $this->db->query($sql);
+        $result = $query->result_array();
+
+        $data = [];
+        foreach($result as $row){
+            $data[] = [
+                'topic_name' => $row['topic_title'],
+                'avg_value_1' => $row['avg_value_1'],
+                'avg_value_2' => $row['avg_value_2'],
+                'avg_value_3' => $row['avg_value_3'],
+                'avg_value_4' => $row['avg_value_4'],
+                'avg_value_5' => $row['avg_value_5'],
+            ];
+            
+        }
+        return $data;
+    }
 
     private function _insertBatchQuestion($data)
     {
@@ -133,4 +171,6 @@ class Question_model extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
+
+
 }
