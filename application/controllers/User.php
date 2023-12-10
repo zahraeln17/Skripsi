@@ -50,23 +50,25 @@ class User extends CI_Controller
 
     public function hasil_kuesioner()
     {
-        $labels = [];
-        $data = [];
         $topicHeader = [];
-        $questions = [];
-        // $dataChartBar =  $this->Question_model->getQuestionnaireWithAverage();
-        $topics =  $this->Question_model->getAllTopic();
-        // getQuestionnaireWithAverageByTopicId
-        
-        foreach ($topics as $topic) {
-            $dataChartBar = $this->Question_model->getQuestionnaireWithAverageByTopicId( $topic->id );
-            foreach ($dataChartBar as $row) {
-                $labels[] = $row->id; // Assuming 'question_title' holds the title of questions
-                $data[] =  ($row->average_value / 5) * 100 ;
-                $questions[] = [ 'id' =>  $row->id,
-                                    'question' => $row->questioner_text ];// Assuming 'average_value' holds the average value
-            }
-    
+        $data = [];
+
+        $results = $this->Question_model->getChartValue();
+        foreach ($results as $result){
+            $jsonData = [
+                $result['avg_value_1']*10,
+                $result['avg_value_2']*10,
+                $result['avg_value_3']*10,
+                $result['avg_value_4']*10,
+                $result['avg_value_5']*10,
+            ];
+            $labels = [
+                ["Kemudahan", "untuk", "dipelajari"],
+                ["Kemudahan", "untuk", "digunakan"],
+                ["Jelas", "dan", "mudah", "dipahami"],
+                ["Mudah", "hingga", "mahir"],
+                ["xxx"]
+            ];
             $chart_data = [
                 'labels' => $labels,
                 'datasets' => [
@@ -75,37 +77,68 @@ class User extends CI_Controller
                         'backgroundColor' => '#4e73df',
                         'hoverBackgroundColor' => '#2e59d9',
                         'borderColor' => '#4e73df',
-                        'data' => $data,
+                        'data' => $jsonData
                     ],
                 ],
             ];
 
-            // Variable name for chart value??
-
-            $topicHeader[] = [
-                'subTitle' =>  $topic->sub_title,
-                'list_questions' => $questions,
-                'data' => json_encode($chart_data)
+            $options = [
+                'responsive' => true,
             ];
+            $topicHeader[] = [
+                'data' => json_encode($chart_data),
+                'subTitle' => $result['topic_name'],
+                "options" => json_encode($options)
+            ];
+        }
 
+        
+        $rows = $this->Answer_model->GetAnswerDetails();
+
+        $groupedData = [];
+        foreach ($rows as $row) {
+            $userName = $row['user_name'];
+            $topicTitle = $row['topic_title'];
+            $questionText = $row['questioner_text'];
+            $answerValue = $row['value'];
+
+            $groupedData[$userName][$topicTitle][$questionText] = $answerValue;
+        }
+
+        $result = [];
+        foreach ($groupedData as $userName => $topics) {
+            $userRow = ['user_name' => $userName];
+
+            foreach ($topics as $topicTitle => $questions) {
+                $topicAbbreviation = '';
+                foreach (explode(' ', $topicTitle) as $word) {
+                    $topicAbbreviation .= strtoupper(substr($word, 0, 1));
+                }
+
+                $questionIndex = 1;
+                foreach ($questions as $questionText => $answerValue) {
+                    $columnName = $topicAbbreviation . ($questionIndex > 1 ? $questionIndex : '');
+                    $userRow[$columnName] = $answerValue;
+                    $questionIndex++;
+                }
+            }
+
+            $result[] = $userRow;
         }
 
         // echo '<pre>';
-        // highlight_string(var_export($topicHeader, true));
+        // highlight_string(var_export($result, true));
         // echo '</pre>';
         // die;
-
-       
-
         $data['chart_data'] = $topicHeader;
         $data['title'] = 'Hasil Kuesioner';
         $data['user'] = $this->db->get_where('users', ['email' => $this->session->userdata('email')])->row_array();
-        $data['questions'] = $this->Question_model->getQuestionnaireWithAverage();
-
+        $data['result_tables'] = $result;
         $this->load->view('templates/admin-header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
         $this->load->view('user/hasil_kuesioner', $data);
         $this->load->view('templates/footer', $data);
     }
+
 }
