@@ -15,6 +15,7 @@
                             <h6 class="m-0 font-weight-bold text-primary"> <?= $value['subTitle'] ?></h6>
                         </div>
                         <div class="card-body mb-5">
+                            <h6 class="m-0 text-primary"> <?= $value['title'] ?></h6>
                             <div class="chart-bar mb-5" style="width: 100%; overflow-x: auto;">
                                 <canvas id="myBarChart-<?= $key ?>"></canvas>
                             </div>

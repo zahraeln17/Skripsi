@@ -121,42 +121,117 @@ class Question_model extends CI_Model
     }
     public function getChartValue(){
         $sql = "
-            SELECT
-                t.id AS topic_id,
+                SELECT
                 t.sub_title AS topic_title,
-                AVG(CASE WHEN ad.value = 1 THEN ad.value ELSE 0 END) AS avg_value_1,
-                AVG(CASE WHEN ad.value = 2 THEN ad.value ELSE 0 END) AS avg_value_2,
-                AVG(CASE WHEN ad.value = 3 THEN ad.value ELSE 0 END) AS avg_value_3,
-                AVG(CASE WHEN ad.value = 4 THEN ad.value ELSE 0 END) AS avg_value_4,
-                AVG(CASE WHEN ad.value = 5 THEN ad.value ELSE 0 END) AS avg_value_5
+                q.questioner_text,
+                ad.value AS answer_value
             FROM
                 topics t
             JOIN
-                questioners q ON q.topic_id = t.id
-            JOIN
-                answer_details ad ON ad.questioners_id = q.id
+                questioners q ON t.id = q.topic_id
             LEFT JOIN
-                answers a ON ad.answer_id = a.id
-            GROUP BY
-                t.id, t.title;
+                answer_details ad ON q.id = ad.questioners_id
+            LEFT JOIN
+                answers a ON ad.answer_id = a.id;
         ";
         $query = $this->db->query($sql);
         $result = $query->result_array();
 
+        $splitResults = [];
         $data = [];
-        foreach($result as $row){
-            $data[] = [
-                'topic_name' => $row['topic_title'],
-                'avg_value_1' => $row['avg_value_1'],
-                'avg_value_2' => $row['avg_value_2'],
-                'avg_value_3' => $row['avg_value_3'],
-                'avg_value_4' => $row['avg_value_4'],
-                'avg_value_5' => $row['avg_value_5'],
-            ];
-            
+
+        foreach ($result as $row) {
+            $topicTitle = $row['topic_title'];
+            $questionerText = $row['questioner_text'];
+
+            // Check if the topic title key exists
+            if (!isset($splitResults[$topicTitle])) {
+                $splitResults[$topicTitle] = [];
+            }
+
+            // Check if the questioner text key exists for the current topic
+            if (!isset($splitResults[$topicTitle][$questionerText])) {
+                $splitResults[$topicTitle][$questionerText] = [
+                    'answer_counts' => [],
+                    'total' => 0
+                ];
+            }
+            $splitResults[$topicTitle][$questionerText]['total']++;
+
+            // Count the occurrences of each answer value
+            if (!isset($splitResults[$topicTitle][$questionerText]['answer_counts'][$row['answer_value']])) {
+                $splitResults[$topicTitle][$questionerText]['answer_counts'][$row['answer_value']] = 1;
+            } else {
+                $splitResults[$topicTitle][$questionerText]['answer_counts'][$row['answer_value']]++;
+            }
         }
-        return $data;
+
+        $newData = [];
+        foreach ($splitResults as $topicTitle => $questions) {
+            foreach ($questions as $questionerText => $data) {
+                foreach ($data['answer_counts'] as $answer => $count) {
+                    $average = $count / $data['total'];
+                    $splitResults[$topicTitle][$questionerText]['averages'][$answer] = $average;
+                }
+            }
+        }
+     
+        return $splitResults;
     }
+    
+    public function getTopics(){
+        $this->db->select('*');
+        $this->db->from('topics');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function save_question($data) {
+        // Insert question data into the database
+        $this->db->insert('questioners', $data);
+    }
+
+    public function get_question_by_id($id) {
+        // Get question by ID from the database
+        $this->db->where('id', $id);
+        return $this->db->get('questioners')->row();
+    }
+
+    public function update_question($id, $data) {
+        // Update question by ID in the database
+        $this->db->where('id', $id);
+        $this->db->update('questioners', $data);
+    }
+
+    public function delete_question($id) {
+        // Delete question by ID from the database
+        $this->db->where('id', $id);
+        $this->db->delete('questioners');
+    }
+
+    public function save_topic($data) {
+        // Insert topic data into the database
+        $this->db->insert('topics', $data);
+    }
+
+    public function get_topic_by_id($id) {
+        // Get topic by ID from the database
+        $this->db->where('id', $id);
+        return $this->db->get('topics')->row();
+    }
+
+    public function update_topic($id, $data) {
+        // Update topic by ID in the database
+        $this->db->where('id', $id);
+        $this->db->update('topics', $data);
+    }
+
+    public function delete_topic($id) {
+        // Delete question by ID from the database
+        $this->db->where('id', $id);
+        $this->db->delete('topics');
+    }
+    
 
     private function _insertBatchQuestion($data)
     {
@@ -165,12 +240,16 @@ class Question_model extends CI_Model
 
     private function _getQuestion()
     {
-        $this->db->select('questioners.questioner_text, questioners.id, topics.title, topics.sub_title');
+        $this->db->select('questioners.questioner_text, questioners.id,questioners.indicator, topics.title, topics.sub_title');
         $this->db->from('questioners');
         $this->db->join('topics', 'questioners.topic_id = topics.id');
+        $this->db->order_by('questioners.id', 'asc');
+        $this->db->order_by('questioners.id', 'asc');
         $query = $this->db->get();
         return $query->result();
     }
+
+
 
 
 }

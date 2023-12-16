@@ -37,6 +37,11 @@
                 Kuesioner
             </div>
             <li class="nav-item">
+                <a class="nav-link" href="<?= base_url('admin/topic') ?>">
+                    <i class="fas fa-list"></i>
+                    <span>Topics</span></a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="<?= base_url('user/draft_kuesioner') ?>">
                     <i class="fas fa-envelope-open"></i>
                     <span>Draft Kuesioner</span></a>
