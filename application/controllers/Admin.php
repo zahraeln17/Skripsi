@@ -131,5 +131,76 @@ class Admin extends CI_Controller{
         redirect('user/draft_kuesioner', 'refresh');
         // Redirect or show success message
     }
+    
+    public function topic_index()
+    {
+        $data['title'] = 'Topics';
+        $data['user'] = $this->db->get_where('users', ['email' => $this->session->userdata('email')])->row_array();
+        $data['topics'] = $this->Question_model->getTopics();
+        $this->load->view('templates/admin-header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('admin/topic_index', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function create_topic(){
+        $data['title'] = 'New Topics';
+        $data['user'] = $this->db->get_where('users', ['email' => $this->session->userdata('email')])->row_array();
+
+        $this->load->view('templates/admin-header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('admin/topic_new', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function save_topic() {
+        $data = array(
+            'title' => $this->input->post('topicTitle'),
+            'sub_title' => $this->input->post('topicSubtitle')
+        );
+       
+        $save = $this->Question_model->save_topic($data);
+        redirect('admin/topic_index', 'refresh');
+    }
+
+    public function edit_topic($id) {
+        $data['title'] = 'Edit Topic';
+        $data['user'] = $this->db->get_where('users', ['email' => $this->session->userdata('email')])->row_array();
+        // Load question data by ID using your Question_model
+        $data['topic'] = $this->Question_model->get_topic_by_id($id);
+
+        //  echo '<pre>';
+        // highlight_string(var_export( $data, true));
+        // echo '</pre>';
+        // die;
+        $this->load->view('templates/admin-header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('admin/topic_edit', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function update_topic() {
+        // Get form data from POST request
+        $id = $this->input->post('topic_id');
+        $data = array(
+            'title' => $this->input->post('topicTitle'),
+            'sub_title' => $this->input->post('topicSubtitle')
+        );
+
+        // Update question data using Question_model
+        $save = $this->Question_model->update_topic($id, $data);
+        redirect('admin/topic_index', 'refresh');
  
+    }
+
+    public function delete_topic($id) {
+        // Delete question by ID using your Question_model
+        $this->Question_model->delete_topic($id);
+        redirect('admin/topic_index', 'refresh');
+        // Redirect or show success message
+    }
+
 }

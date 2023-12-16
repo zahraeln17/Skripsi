@@ -63,8 +63,17 @@ $route['votes/home'] = 'votes/home';
 
 // admin
 $route['admin/dashboard'] = 'admin/dashboard';
+// admin / Quitioners
 $route['admin/create_question'] = 'admin/createQuestion';
 $route['admin/save_question']['post'] = 'admin/save_question';
 $route['admin/edit_question/(:num)']['get'] = 'admin/edit_question/$1';
 $route['admin/update_question']['post'] = 'admin/update_question';
 $route['admin/delete_question/(:num)']['get'] = 'admin/delete_question/$1';
+
+//  admin / Topic
+$route['admin/topic'] = 'admin/topic_index';
+$route['admin/create_topic'] = 'admin/create_topic';
+$route['admin/save_topic']['post'] = 'admin/save_topic';
+$route['admin/edit_topic/(:num)']['get'] = 'admin/edit_topic/$1';
+$route['admin/update_topic']['post'] = 'admin/update_topic';
+$route['admin/delete_topic/(:num)']['get'] = 'admin/delete_topic/$1';

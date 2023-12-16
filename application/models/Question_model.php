@@ -170,22 +170,6 @@ class Question_model extends CI_Model
         $this->db->insert('questioners', $data);
     }
 
-    private function _insertBatchQuestion($data)
-    {
-        $this->db->insert_batch('questioners', $data);
-    }
-
-    private function _getQuestion()
-    {
-        $this->db->select('questioners.questioner_text, questioners.id,questioners.indicator, topics.title, topics.sub_title');
-        $this->db->from('questioners');
-        $this->db->join('topics', 'questioners.topic_id = topics.id');
-        $this->db->order_by('questioners.id', 'asc');
-        $this->db->order_by('questioners.id', 'asc');
-        $query = $this->db->get();
-        return $query->result();
-    }
-
     public function get_question_by_id($id) {
         // Get question by ID from the database
         $this->db->where('id', $id);
@@ -203,6 +187,48 @@ class Question_model extends CI_Model
         $this->db->where('id', $id);
         $this->db->delete('questioners');
     }
+
+    public function save_topic($data) {
+        // Insert topic data into the database
+        $this->db->insert('topics', $data);
+    }
+
+    public function get_topic_by_id($id) {
+        // Get topic by ID from the database
+        $this->db->where('id', $id);
+        return $this->db->get('topics')->row();
+    }
+
+    public function update_topic($id, $data) {
+        // Update topic by ID in the database
+        $this->db->where('id', $id);
+        $this->db->update('topics', $data);
+    }
+
+    public function delete_topic($id) {
+        // Delete question by ID from the database
+        $this->db->where('id', $id);
+        $this->db->delete('topics');
+    }
+    
+
+    private function _insertBatchQuestion($data)
+    {
+        $this->db->insert_batch('questioners', $data);
+    }
+
+    private function _getQuestion()
+    {
+        $this->db->select('questioners.questioner_text, questioners.id,questioners.indicator, topics.title, topics.sub_title');
+        $this->db->from('questioners');
+        $this->db->join('topics', 'questioners.topic_id = topics.id');
+        $this->db->order_by('questioners.id', 'asc');
+        $this->db->order_by('questioners.id', 'asc');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+
 
 
 }
