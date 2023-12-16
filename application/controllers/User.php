@@ -54,44 +54,47 @@ class User extends CI_Controller
         $data = [];
 
         $results = $this->Question_model->getChartValue();
-        foreach ($results as $result){
-            $jsonData = [
-                $result['avg_value_1']*10,
-                $result['avg_value_2']*10,
-                $result['avg_value_3']*10,
-                $result['avg_value_4']*10,
-                $result['avg_value_5']*10,
-            ];
-            $labels = [
-                ["Kemudahan", "untuk", "dipelajari"],
-                ["Kemudahan", "untuk", "digunakan"],
-                ["Jelas", "dan", "mudah", "dipahami"],
-                ["Mudah", "hingga", "mahir"],
-                ["xxx"]
-            ];
-            $chart_data = [
-                'labels' => $labels,
-                'datasets' => [
-                    [
-                        'label' => 'Average Answer',
-                        'backgroundColor' => '#4e73df',
-                        'hoverBackgroundColor' => '#2e59d9',
-                        'borderColor' => '#4e73df',
-                        'data' => $jsonData
+        $temp = "";
+        
+        foreach ($results as $topicTitle => $questions) {
+            foreach ($questions as $questionerText => $data) {
+                // Urutkan array berdasarkan kuncinya (label)
+                ksort($data['averages']);
+        
+                // Kalikan nilai average dengan 100
+                $percentages = array_map(function ($average) {
+                    return $average * 100;
+                }, $data['averages']);
+        
+                $chart_data = [
+                    'labels' => array_map(function ($value) {
+                        return [$value];
+                    }, array_keys($data['averages'])),
+                    'datasets' => [
+                        [
+                            'label' => 'Average Answer',
+                            'backgroundColor' => '#4e73df',
+                            'hoverBackgroundColor' => '#2e59d9',
+                            'borderColor' => '#4e73df',
+                            'data' => array_values($percentages),
+                        ],
                     ],
-                ],
-            ];
-
-            $options = [
-                'responsive' => true,
-            ];
-            $topicHeader[] = [
-                'data' => json_encode($chart_data),
-                'subTitle' => $result['topic_name'],
-                "options" => json_encode($options)
-            ];
+                ];
+        
+                $options = [
+                    'responsive' => true,
+                ];
+        
+                $topicHeader[] = [
+                    'data' => json_encode($chart_data),
+                    'subTitle' => $topicTitle,
+                    'title' => $questionerText,
+                    'options' => json_encode($options),
+                ];
+            }
         }
-
+        
+        
         
         $rows = $this->Answer_model->GetAnswerDetails();
 
@@ -125,11 +128,6 @@ class User extends CI_Controller
 
             $result[] = $userRow;
         }
-
-        // echo '<pre>';
-        // highlight_string(var_export($result, true));
-        // echo '</pre>';
-        // die;
         $data['chart_data'] = $topicHeader;
         $data['title'] = 'Hasil Kuesioner';
         $data['user'] = $this->db->get_where('users', ['email' => $this->session->userdata('email')])->row_array();
