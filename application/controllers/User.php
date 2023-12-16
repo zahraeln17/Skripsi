@@ -73,9 +73,9 @@ class User extends CI_Controller
                     'datasets' => [
                         [
                             'label' => 'Average Answer',
-                            'backgroundColor' => '#4e73df',
-                            'hoverBackgroundColor' => '#2e59d9',
-                            'borderColor' => '#4e73df',
+                            'backgroundColor' => '#711C09',
+                            'hoverBackgroundColor' => '#b84a42',
+                            'borderColor' => '#711C09',
                             'data' => array_values($percentages),
                         ],
                     ],
