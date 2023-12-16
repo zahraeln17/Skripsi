@@ -7,6 +7,8 @@ class Admin extends CI_Controller{
         parent::__construct();
         $this->load->library('form_validation');
         // $this->load->library('input');
+        $this->load->model('Question_model');
+        $this->load->model('Answer_model');
     }
 
     public function dashboard(){
@@ -63,10 +65,71 @@ class Admin extends CI_Controller{
     }
 
     public function CreateQuestion(){
-        $this->load->view('admin/createQuestion');
+        $data['title'] = 'Tambah Kuesioner';
+        $data['user'] = $this->db->get_where('users', ['email' => $this->session->userdata('email')])->row_array();
+        $data['topics'] = $this->Question_model->getTopics();
+        $this->load->view('templates/admin-header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('admin/createQuestion', $data);
+        $this->load->view('templates/footer');
     }
 
-    public function EditQuestion(){
-        $this->load->view('admin/editQuestion');
+    public function save_question() {
+        $data = array(
+            'topic_id' => $this->input->post('topicTitle'),
+            'indicator' => $this->input->post('indicator'),
+            'questioner_text' => $this->input->post('questionText')
+        );
+       
+        $save = $this->Question_model->save_question($data);
+        redirect('user/draft_kuesioner', 'refresh');
+        // if ($save) {
+        //     redirect('user/draft_kuesioner', 'refresh');
+        // }else{
+        //     redirect('admin/create_question', 'refresh');
+        // }
+        // Redirect or show success message
     }
+
+    public function edit_question($id) {
+        $data['title'] = 'Edit Kuesioner';
+        $data['user'] = $this->db->get_where('users', ['email' => $this->session->userdata('email')])->row_array();
+        $data['topics'] = $this->Question_model->getTopics();
+        // Load question data by ID using your Question_model
+        $data['question'] = $this->Question_model->get_question_by_id($id);
+
+        //  echo '<pre>';
+        // highlight_string(var_export( $data, true));
+        // echo '</pre>';
+        // die;
+        $this->load->view('templates/admin-header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('admin/editQuestion', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function update_question() {
+        // Get form data from POST request
+        $id = $this->input->post('question_id');
+        $data = array(
+            'topic_id' => $this->input->post('topicTitle'),
+            'indicator' => $this->input->post('indicator'),
+            'questioner_text' => $this->input->post('questionText')
+        );
+
+        // Update question data using Question_model
+        $save = $this->Question_model->update_question($id, $data);
+        redirect('user/draft_kuesioner', 'refresh');
+ 
+    }
+
+    public function delete_question($id) {
+        // Delete question by ID using your Question_model
+        $this->Question_model->delete_question($id);
+        redirect('user/draft_kuesioner', 'refresh');
+        // Redirect or show success message
+    }
+ 
 }

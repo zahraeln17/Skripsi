@@ -157,6 +157,18 @@ class Question_model extends CI_Model
         }
         return $data;
     }
+    
+    public function getTopics(){
+        $this->db->select('*');
+        $this->db->from('topics');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function save_question($data) {
+        // Insert question data into the database
+        $this->db->insert('questioners', $data);
+    }
 
     private function _insertBatchQuestion($data)
     {
@@ -165,11 +177,31 @@ class Question_model extends CI_Model
 
     private function _getQuestion()
     {
-        $this->db->select('questioners.questioner_text, questioners.id, topics.title, topics.sub_title');
+        $this->db->select('questioners.questioner_text, questioners.id,questioners.indicator, topics.title, topics.sub_title');
         $this->db->from('questioners');
         $this->db->join('topics', 'questioners.topic_id = topics.id');
+        $this->db->order_by('questioners.id', 'asc');
+        $this->db->order_by('questioners.id', 'asc');
         $query = $this->db->get();
         return $query->result();
+    }
+
+    public function get_question_by_id($id) {
+        // Get question by ID from the database
+        $this->db->where('id', $id);
+        return $this->db->get('questioners')->row();
+    }
+
+    public function update_question($id, $data) {
+        // Update question by ID in the database
+        $this->db->where('id', $id);
+        $this->db->update('questioners', $data);
+    }
+
+    public function delete_question($id) {
+        // Delete question by ID from the database
+        $this->db->where('id', $id);
+        $this->db->delete('questioners');
     }
 
 

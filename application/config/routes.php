@@ -64,4 +64,7 @@ $route['votes/home'] = 'votes/home';
 // admin
 $route['admin/dashboard'] = 'admin/dashboard';
 $route['admin/create_question'] = 'admin/createQuestion';
-$route['admin/edit_question'] = 'admin/editQuestion';
+$route['admin/save_question']['post'] = 'admin/save_question';
+$route['admin/edit_question/(:num)']['get'] = 'admin/edit_question/$1';
+$route['admin/update_question']['post'] = 'admin/update_question';
+$route['admin/delete_question/(:num)']['get'] = 'admin/delete_question/$1';
